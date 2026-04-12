@@ -4249,3 +4249,102 @@ body::after {
   margin-bottom: 12px;
   display: inline-block;
 }
+
+/* ══════════════════════════════════════════
+   AI VOICE AGENT (FLOATING UI)
+   ══════════════════════════════════════════ */
+
+#ai-agent-btn {
+  position: fixed;
+  bottom: 25px;
+  left: 25px;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: #111111;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 9999;
+  color: var(--white);
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+  outline: none;
+}
+
+#ai-agent-btn svg {
+  width: 24px;
+  height: 24px;
+  stroke: rgba(255, 255, 255, 0.7);
+  transition: stroke 0.3s ease;
+}
+
+#ai-agent-btn:hover {
+  transform: scale(1.05);
+  background: #1a1a24;
+}
+
+#ai-agent-btn:hover svg {
+  stroke: #ffffff;
+}
+
+/* ── States ── */
+
+/* IDLE: Subtle blue pulse */
+#ai-agent-btn.state-idle {
+  box-shadow: 0 0 10px rgba(61, 61, 255, 0.2), 0 0 0 2px transparent;
+}
+#ai-agent-btn.state-idle:hover {
+  box-shadow: 0 0 15px rgba(61, 61, 255, 0.4), 0 0 0 2px rgba(61, 61, 255, 0.2);
+}
+
+/* LISTENING: Red breathing border */
+@keyframes agentListening {
+  0% { box-shadow: 0 0 0 0 rgba(255, 80, 80, 0.4); border-color: rgba(255, 80, 80, 0.8); }
+  70% { box-shadow: 0 0 0 15px rgba(255, 80, 80, 0); border-color: rgba(255, 80, 80, 0.3); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 80, 80, 0); border-color: rgba(255, 80, 80, 0.8); }
+}
+#ai-agent-btn.state-listening {
+  animation: agentListening 1.5s infinite;
+}
+#ai-agent-btn.state-listening svg {
+  stroke: #ff5050;
+}
+
+/* THINKING: Fast spinning border / pulse */
+@keyframes agentThinking {
+  0% { transform: scale(1) rotate(0deg); box-shadow: 0 0 15px rgba(108, 108, 255, 0.6); border-top-color: #3d3dff; }
+  50% { transform: scale(0.95) rotate(180deg); box-shadow: 0 0 25px rgba(61, 61, 255, 0.9); border-bottom-color: #3d3dff; }
+  100% { transform: scale(1) rotate(360deg); box-shadow: 0 0 15px rgba(108, 108, 255, 0.6); border-top-color: #3d3dff; }
+}
+#ai-agent-btn.state-thinking {
+  animation: agentThinking 1s linear infinite;
+}
+#ai-agent-btn.state-thinking svg {
+  opacity: 0.5;
+  animation: agentThinkingReverse 1s linear infinite; /* Counter-rotate icon so it stays somewhat upright */
+}
+@keyframes agentThinkingReverse {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-360deg); }
+}
+
+
+/* SPEAKING: Audio-wave green/blue shadow */
+@keyframes agentSpeaking {
+  0%   { box-shadow: 0 0 10px rgba(50, 200, 150, 0.5), 0 0 0 4px rgba(50, 200, 150, 0.2); }
+  25%  { box-shadow: 0 0 20px rgba(61, 61, 255, 0.7), 0 0 0 12px rgba(61, 61, 255, 0.1); }
+  50%  { box-shadow: 0 0 15px rgba(50, 200, 150, 0.9), 0 0 0 8px rgba(50, 200, 150, 0.3); }
+  75%  { box-shadow: 0 0 25px rgba(61, 61, 255, 0.8), 0 0 0 16px rgba(61, 61, 255, 0.2); }
+  100% { box-shadow: 0 0 10px rgba(50, 200, 150, 0.5), 0 0 0 4px rgba(50, 200, 150, 0.2); }
+}
+#ai-agent-btn.state-speaking {
+  animation: agentSpeaking 1.2s ease-in-out infinite;
+  border-color: rgba(50, 200, 150, 0.6);
+}
+#ai-agent-btn.state-speaking svg {
+  stroke: #32c896;
+}
+

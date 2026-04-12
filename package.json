@@ -1,0 +1,24 @@
+{
+  "name": "scratch",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nileshrajput203/Blinkbeyond-n.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/nileshrajput203/Blinkbeyond-n/issues"
+  },
+  "homepage": "https://github.com/nileshrajput203/Blinkbeyond-n#readme",
+  "dependencies": {
+    "openai": "^6.34.0"
+  }
+}
