@@ -1,4 +1,4 @@
 node_modules/
-parallax-app/
+.next/
 .DS_Store
 Thumbs.db
