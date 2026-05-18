@@ -7,6 +7,16 @@
   <meta name="description" content="Page not found — Blink Beyond digital marketing agency.">
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <link rel="stylesheet" href="css/style.css">
+  <script>
+    (function() {
+      var hasCookie = document.cookie.split('; ').some(function(row) {
+        return row.indexOf('bb_loader_seen=') === 0;
+      });
+      if (hasCookie) {
+        document.documentElement.classList.add('loader-skip');
+      }
+    })();
+  </script>
   <style>
     .not-found-section {
       min-height: 100vh;

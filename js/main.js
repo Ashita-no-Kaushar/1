@@ -6,10 +6,18 @@ document.addEventListener('DOMContentLoaded', () => {
   // ── Premium Branded Splash Screen ──
   const loader = document.getElementById('page-loader');
   if (loader) {
-    // Show only once per session
-    if (sessionStorage.getItem('bb_loader_seen')) {
+    const cookieName = 'bb_loader_seen';
+    const hasCookie = document.cookie.split('; ').some((row) => row.startsWith(`${cookieName}=`));
+    const setCookie = (name, value, days) => {
+      const maxAge = days * 24 * 60 * 60;
+      document.cookie = `${name}=${value}; max-age=${maxAge}; path=/; SameSite=Lax`;
+    };
+
+    // Show only once across the whole site
+    if (hasCookie) {
       loader.classList.add('skip');
     } else {
+      setCookie(cookieName, '1', 365);
       const percentEl = document.getElementById('loader-percent');
       const barFill = document.getElementById('loader-bar-fill');
       const fillText = document.getElementById('loader-fill-text');
@@ -44,7 +52,6 @@ document.addEventListener('DOMContentLoaded', () => {
           // Done — slide loader out after a brief pause
           setTimeout(() => {
             loader.classList.add('hidden');
-            sessionStorage.setItem('bb_loader_seen', '1');
             // Remove from DOM after transition
             setTimeout(() => loader.remove(), 900);
           }, 400);
@@ -92,6 +99,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (card && anchor && heroPage) {
     let scrollProg = 0;
+    let targetProg = 0;
+    let rafId = null;
     let isFS = false;
     let progressTimer = null;
     let barW = 0;
@@ -180,16 +189,32 @@ document.addEventListener('DOMContentLoaded', () => {
       if (fsFill) fsFill.style.width = '0%';
     }
 
+    function smoothStep() {
+      const delta = targetProg - scrollProg;
+      scrollProg += delta * 0.18;
+      updateCard();
+
+      if (Math.abs(delta) > 0.001) {
+        rafId = requestAnimationFrame(smoothStep);
+      } else {
+        scrollProg = targetProg;
+        updateCard();
+        rafId = null;
+      }
+    }
+
     // Scroll trigger to pin the hero page and drive the scrollProg
     if (typeof ScrollTrigger !== 'undefined') {
       ScrollTrigger.create({
         trigger: heroPage,
         start: "top top",
-        end: "+=2200", // 2200px of scrolling for the expansion and viewing
+        end: "+=900", // Reduced scroll distance to eliminate extra space
         pin: true,
         onUpdate: (self) => {
-          scrollProg = self.progress;
-          updateCard();
+          targetProg = self.progress;
+          if (!rafId) {
+            rafId = requestAnimationFrame(smoothStep);
+          }
         }
       });
     }
@@ -311,14 +336,14 @@ document.addEventListener('DOMContentLoaded', () => {
           // Ease function — ease-out cubic for smooth deceleration
           const eased = 1 - Math.pow(1 - imgProgress, 3);
           
-          // Y translation: from +100vh (below screen) to 0 (final position)
-          const currentY = 100 * (1 - eased * speed);
+          // Y translation: subtle drift while staying on screen
+          const currentY = 12 * (1 - eased * speed);
           
-          // Scale: from 0.6 to 1 — clean scaling without rotation
-          const scale = 0.6 + 0.4 * eased;
+          // Scale: keep images readable while still animating
+          const scale = 0.85 + 0.15 * eased;
           
-          // Opacity: fade in during first 30% of progress, then stay fully visible
-          const opacity = Math.min(1, imgProgress * 3.3);
+          // Opacity: keep all images visible, still easing in
+          const opacity = Math.max(0.45, Math.min(1, imgProgress * 3.3));
           
           img.style.transform = `translateY(${currentY}vh) scale(${scale})`;
           img.style.opacity = opacity;
@@ -1204,71 +1229,22 @@ window.addEventListener('load', () => {
         left: cx - cardW / 2,
         top: cy - cardH / 2,
         rotation: angleDeg + 90, // +90 to make cards tangent to the circle
-        transformOrigin: 'center center'
+        transformOrigin: 'center center',
+        force3D: true
       });
     });
     
     // Auto-rotate the ring continuously – full 360° loops seamlessly
     // because the duplicate cards fill the other half of the circle
-    gsap.set(arcRing, { rotation: 8 });
+    gsap.set(arcRing, { rotation: 8, force3D: true });
     
     gsap.to(arcRing, {
       rotation: '-=360',   // Full rotation
       duration: 100,       // 100 seconds for one full revolution (slower, more premium)
       ease: 'none',
+      force3D: true,
       repeat: -1           // Infinite loop
     });
-  }
-
-  // ── CUSTOM GSAP CURSOR ──
-  const cursor = document.querySelector('.cursor');
-  const cursorBubble = document.querySelector('.cursor-bubble');
-  const arcSceneContainer = document.getElementById('arcScene');
-
-  if (cursor) {
-    // Force cursor to center of div
-    gsap.set(cursor, { xPercent: -50, yPercent: -50 });
-    
-    let pos = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-    let mouse = { x: pos.x, y: pos.y };
-    let speed = 0.35; // Follow speed
-    
-    window.addEventListener('mousemove', e => {
-      mouse.x = e.clientX;
-      mouse.y = e.clientY;
-    });
-    
-    gsap.ticker.add(() => {
-      const dt = 1.0 - Math.pow(1.0 - speed, gsap.ticker.deltaRatio());
-      pos.x += (mouse.x - pos.x) * dt;
-      pos.y += (mouse.y - pos.y) * dt;
-      gsap.set(cursor, { x: pos.x, y: pos.y });
-    });
-
-    // Hover interactions for the Arc Scene
-    if (arcSceneContainer) {
-      arcSceneContainer.addEventListener('mouseenter', () => {
-        cursor.classList.add('is-active');
-        if(cursorBubble) cursorBubble.innerHTML = 'Drag';
-      });
-      
-      arcSceneContainer.addEventListener('mouseleave', () => {
-        cursor.classList.remove('is-active');
-      });
-      
-      // Optional: change text when hovering a specific card inside the arc
-      const cards = arcSceneContainer.querySelectorAll('.a-card');
-      cards.forEach(card => {
-        card.addEventListener('mouseenter', () => {
-          if(cursorBubble) cursorBubble.innerHTML = 'View';
-          gsap.to(cursorBubble, { scale: 1.1, duration: 0.2 });
-        });
-        card.addEventListener('mouseleave', () => {
-          if(cursorBubble) cursorBubble.innerHTML = 'Drag';
-          gsap.to(cursorBubble, { scale: 1, duration: 0.2 });
-        });
-      });
-    }
   }
 
 });
@@ -1292,13 +1268,13 @@ window.addEventListener('load', () => {
         // 1. Start flicker animation (CSS handles the keyframes)
         setTimeout(function() {
           lamp.classList.add('lamp-active');
-        }, 600); // 0.6s delay — starts in darkness
+        }, 200); // faster start
 
         // 2. After flicker completes (~2.5s animation + 0.6s delay = 3.1s),
         //    reveal footer content
         setTimeout(function() {
           footer.classList.add('footer-revealed');
-        }, 3100);
+        }, 1400);
 
         observer.disconnect();
       }

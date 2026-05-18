@@ -14,6 +14,16 @@
   <meta property="og:url" content="https://blinkbeyond.co.in">
   <meta property="og:type" content="website">
   <link rel="stylesheet" href="css/style.css">
+  <script>
+    (function() {
+      var hasCookie = document.cookie.split('; ').some(function(row) {
+        return row.indexOf('bb_loader_seen=') === 0;
+      });
+      if (hasCookie) {
+        document.documentElement.classList.add('loader-skip');
+      }
+    })();
+  </script>
 </head>
 
 <body>
@@ -189,64 +199,6 @@
       </div>
     </div>
   </section>
-
-  <!-- ═══════════════ FOOTER ═══════════════ -->
-  <footer class="footer" id="site-footer">
-    <div class="lamp" id="footer-lamp">
-      <div class="lamp__glow"></div>
-      <div class="lamp__line"></div>
-    </div>
-    <div class="footer-content">
-      <div class="container">
-        <div class="footer-top">
-          <div class="footer-col footer-about">
-            <div class="footer-logo">BLINK <span>BEYOND</span></div>
-            <p class="footer-tagline">Where brands blink and boom. We craft digital experiences that drive real growth.</p>
-            <div class="footer-social-links">
-              <a href="https://instagram.com/blinkbeyond" target="_blank" rel="noopener" aria-label="Instagram" class="social-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
-              </a>
-              <a href="https://linkedin.com/company/blinkbeyond" target="_blank" rel="noopener" aria-label="LinkedIn" class="social-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-              </a>
-              <a href="https://facebook.com/blinkbeyond" target="_blank" rel="noopener" aria-label="Facebook" class="social-icon">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
-              </a>
-            </div>
-          </div>
-          <div class="footer-col footer-links-col">
-            <h4 class="footer-col-title">Quick Links</h4>
-            <a href="index.html">Home</a>
-            <a href="services.html">Services</a>
-            <a href="about.html">About Us</a>
-            <a href="contact.html">Contact</a>
-          </div>
-          <div class="footer-col footer-services-col">
-            <h4 class="footer-col-title">Services</h4>
-            <a href="services.html">Web Development</a>
-            <a href="services.html">Social Media Marketing</a>
-            <a href="services.html">Performance Marketing</a>
-            <a href="services.html">UI/UX Design</a>
-          </div>
-          <div class="footer-col footer-contact-col">
-            <h4 class="footer-col-title">Get In Touch</h4>
-            <p><span class="footer-contact-label">Address</span>Palghar - 401404,<br>Mumbai-Maharashtra.</p>
-            <p><span class="footer-contact-label">Phone</span><a href="tel:+919545556009">+91 95455 56009</a></p>
-            <p><span class="footer-contact-label">Email</span><a href="mailto:support@blinkbeyond.co.in">support@blinkbeyond.co.in</a></p>
-          </div>
-        </div>
-      </div>
-      <div class="footer-brand-wrap" id="footer-brand-wrap">
-        <span class="footer-brand-text">BLINK BEYOND</span>
-      </div>
-      <div class="footer-bottom">
-        <div class="container footer-bottom-inner">
-          <p>© 2026 Blink Beyond. All rights reserved.</p>
-          <p>Crafted with passion in Mumbai 🇮🇳</p>
-        </div>
-      </div>
-    </div>
-  </footer>
 
   <!-- GSAP + ScrollTrigger -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>

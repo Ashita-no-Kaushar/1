@@ -12,6 +12,16 @@
   <meta property="og:url" content="https://blinkbeyond.co.in">
   <meta property="og:type" content="website">
   <link rel="stylesheet" href="css/style.css">
+  <script>
+    (function() {
+      var hasCookie = document.cookie.split('; ').some(function(row) {
+        return row.indexOf('bb_loader_seen=') === 0;
+      });
+      if (hasCookie) {
+        document.documentElement.classList.add('loader-skip');
+      }
+    })();
+  </script>
 </head>
 <body>
   <!-- Page Loader — Premium Branded Splash -->
@@ -252,22 +262,8 @@
       </div>
     </div>
 
-    <!-- Scroll Indicator -->
-    <div class="hero-scroll">
-      <div class="scroll-dot"></div>
-      <span>Scroll</span>
-    </div>
-
     <!-- Inner text sitting below the arc, similar to Osmo -->
     <div class="hero-inner-text">
-      <h2>
-        <span class="inline-logo" style="color:var(--blue);display:inline-flex;align-items:center;vertical-align:middle;margin-right:8px">
-          <svg viewBox="0 0 60 40" fill="currentColor" style="height:0.8em;width:auto">
-            <path d="M5 5 L28 20 L5 35 Z" />
-            <path d="M31 5 L54 20 L31 35 Z" />
-          </svg>
-        </span> is a dynamic digital agency creating scroll&#8209;stopping websites and data&#8209;driven marketing campaigns. Get exclusive access to the techniques and strategies behind our award&#8209;winning work.</h2>
-      
       <div class="play-reel-btn">
         <span class="play-text" id="wPlay">Play</span>
         <div id="card-anchor"></div>
@@ -301,19 +297,6 @@
       </div>
     </div>
   </section>
-
-  <div class="clients-strip">
-    <div class="clients-strip-inner" style="justify-content: center; max-width: 1200px; margin: 0 auto; padding: 0 5vw;">
-      <div class="clients-label" style="text-transform: uppercase;">Trusted by Industrial Leaders</div>
-      <div class="clients-logos">
-        <span class="client-name" style="text-transform: uppercase;">Royals Burger</span>
-        <span class="client-divider">·</span>
-        <span class="client-name" style="text-transform: uppercase;">Prime Dental</span>
-        <span class="client-divider">·</span>
-        <span class="client-name" style="text-transform: uppercase;">Sun Bless Foods</span>
-      </div>
-    </div>
-  </div>
 
   <!-- ═══════════════ BLINK ═══════════════ -->
   <section class="parallax-word-section" id="section-blink">
@@ -658,15 +641,6 @@
       </div>
     </div>
   </footer>
-
-  <!-- ═══════════════ CUSTOM CURSOR ═══════════════ -->
-  <div class="cursor">
-    <div class="cursor__drag-dots">
-      <div class="cursor__drag-dot"></div>
-      <div class="cursor__drag-dot"></div>
-    </div>
-    <div class="cursor-bubble"></div>
-  </div>
 
   <!-- GSAP + ScrollTrigger + Draggable -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>

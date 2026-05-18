@@ -145,7 +145,7 @@ select {
 /* ── HERO PAGE ── */
 .hero-page {
   width: 100%;
-  height: 220vh;
+  height: 140vh;
   /* Tall enough to contain the full visible arc + text */
   overflow: visible;
   /* Cards MUST NOT be clipped */
@@ -253,8 +253,8 @@ select {
   overflow: visible;
   /* Cards flow freely — no clipping */
   /* Fade out cards at the bottom so they don't abruptly end or overlap next sections */
-  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 65%, transparent 85%);
-  mask-image: linear-gradient(to bottom, black 0%, black 65%, transparent 85%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 80%);
+  mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 80%);
 }
 
 /* The giant ring — center is far below the viewport */
@@ -275,14 +275,14 @@ select {
 /* ── HERO INNER TEXT (below cards) ── */
 .hero-inner-text {
   position: absolute;
-  top: 120vh;
+  bottom: clamp(120px, 16vh, 210px);
   /* Sit below the top arc cards */
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
   width: 90%;
   max-width: 680px;
-  z-index: 10;
+  z-index: 20;
   pointer-events: none;
 }
 
@@ -292,7 +292,7 @@ select {
   color: #4b5563;
   line-height: 1.6;
   font-weight: 400;
-  margin-bottom: 56px;
+  margin-bottom: clamp(24px, 4vh, 40px);
   letter-spacing: -0.01em;
 }
 
@@ -539,6 +539,7 @@ select {
   overflow: hidden;
   box-shadow: 0 12px 48px rgba(0, 0, 0, 0.18);
   will-change: transform;
+  backface-visibility: hidden;
   background-color: var(--dark-bg);
   pointer-events: auto;
   cursor: pointer;
@@ -811,8 +812,8 @@ select {
   }
 
   .arc-scene {
-    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 50%, transparent 80%);
-    mask-image: linear-gradient(to bottom, black 0%, black 50%, transparent 80%);
+    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 75%);
+    mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 75%);
   }
 
   .hero-text {
@@ -831,11 +832,11 @@ select {
   }
 
   .hero-inner-text {
-    top: 130vh;
+    bottom: clamp(110px, 18vh, 200px);
   }
 
   .hero-page {
-    height: 250vh;
+    height: 170vh;
   }
 }
 
@@ -1245,8 +1246,8 @@ select {
 
 .parallax-img {
   position: absolute;
-  opacity: 0;
-  transform: translateY(120vh) scale(0.7);
+  opacity: 0.45;
+  transform: translateY(12vh) scale(0.85);
   will-change: transform, opacity;
   transition: none;
 }
@@ -1262,45 +1263,45 @@ select {
 
 /* 6 distinct positions spread around the viewport */
 .pimg-1 {
-  width: clamp(160px, 17vw, 260px);
-  height: clamp(110px, 13vw, 200px);
-  left: 2%;
-  top: 8%;
+  width: clamp(125px, 14vw, 210px);
+  height: clamp(80px, 9vw, 145px);
+  left: 4%;
+  top: 7%;
 }
 
 .pimg-2 {
-  width: clamp(140px, 15vw, 240px);
-  height: clamp(100px, 11vw, 180px);
-  right: 2%;
-  top: 5%;
+  width: clamp(125px, 14vw, 210px);
+  height: clamp(80px, 9vw, 145px);
+  right: 4%;
+  top: 3%;
 }
 
 .pimg-3 {
-  width: clamp(130px, 14vw, 220px);
-  height: clamp(95px, 10vw, 170px);
-  left: 1%;
-  top: 40%;
+  width: clamp(115px, 13vw, 190px);
+  height: clamp(75px, 8vw, 135px);
+  left: 2%;
+  top: 48%;
 }
 
 .pimg-4 {
-  width: clamp(150px, 16vw, 250px);
-  height: clamp(105px, 12vw, 190px);
-  right: 1%;
-  top: 38%;
+  width: clamp(120px, 13.5vw, 200px);
+  height: clamp(75px, 8vw, 135px);
+  right: 2%;
+  top: 48%;
 }
 
 .pimg-5 {
-  width: clamp(120px, 13vw, 200px);
-  height: clamp(85px, 10vw, 160px);
-  left: 4%;
-  bottom: 8%;
+  width: clamp(110px, 12vw, 185px);
+  height: clamp(70px, 7.5vw, 130px);
+  left: 6%;
+  bottom: 14%;
 }
 
 .pimg-6 {
-  width: clamp(145px, 15vw, 230px);
-  height: clamp(100px, 11vw, 175px);
-  right: 3%;
-  bottom: 6%;
+  width: clamp(115px, 12.5vw, 195px);
+  height: clamp(70px, 7.5vw, 130px);
+  right: 6%;
+  bottom: 14%;
 }
 
 /* Responsive — smaller on tablet */
@@ -1312,8 +1313,8 @@ select {
   .pimg-4,
   .pimg-5,
   .pimg-6 {
-    width: clamp(100px, 13vw, 160px);
-    height: clamp(70px, 9vw, 120px);
+    width: clamp(90px, 12vw, 140px);
+    height: clamp(60px, 8vw, 110px);
   }
 }
 
@@ -2732,7 +2733,7 @@ select {
   background-image:
     radial-gradient(ellipse at 20% 50%, rgba(61, 61, 255, 0.05) 0%, transparent 60%),
     radial-gradient(ellipse at 80% 80%, rgba(61, 61, 255, 0.03) 0%, transparent 50%);
-  padding: clamp(50px, 7vh, 100px) 0;
+  padding: calc(var(--nav-height) + clamp(30px, 6vh, 60px)) 0 clamp(50px, 7vh, 100px);
   min-height: 80vh;
   display: flex;
   align-items: center;
@@ -3000,7 +3001,7 @@ select {
 
 /* Activated by JS via IntersectionObserver */
 .lamp.lamp-active .lamp__glow {
-  animation: tubeFlicker 2.5s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
+  animation: tubeFlicker 1.2s cubic-bezier(0.22, 0.61, 0.36, 1) forwards;
 }
 
 /* ── Thin glow line at source ── */
@@ -3015,8 +3016,8 @@ select {
   box-shadow: 0 0 12px 2px rgba(59, 79, 255, 0.8), 0 0 40px 4px rgba(59, 79, 255, 0.3);
   border-radius: 2px;
   z-index: 5;
-  transition: width 0.8s cubic-bezier(0.22, 0.61, 0.36, 1);
-  transition-delay: 1.8s;
+  transition: width 0.6s cubic-bezier(0.22, 0.61, 0.36, 1);
+  transition-delay: 0.5s;
 }
 
 .lamp.lamp-active .lamp__line {
@@ -3495,6 +3496,11 @@ select {
   display: none !important;
 }
 
+/* Skip instantly when cookie is present */
+.loader-skip .page-loader {
+  display: none !important;
+}
+
 /* Subtle background glow */
 .loader-bg-glow {
   position: absolute;
@@ -3829,61 +3835,6 @@ body::after {
   opacity: 1;
 }
 
-/* ── CUSTOM GSAP CURSOR ── */
-.cursor {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 99999;
-  pointer-events: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  mix-blend-mode: normal;
-}
-
-.cursor-bubble {
-  background-color: #1a1a1a;
-  color: #fff;
-  border-radius: 50px;
-  padding: 16px 24px;
-  font-family: var(--font-body);
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 0.1em;
-  line-height: 1;
-  text-transform: uppercase;
-  opacity: 0;
-  transform: scale(0.5);
-  transition: opacity 0.3s ease, transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.cursor.is-active .cursor-bubble {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.cursor__drag-dots {
-  position: absolute;
-  display: flex;
-  gap: 4px;
-  pointer-events: none;
-  opacity: 0;
-}
-
-/* Hide default cursor only when the custom one is active in Arc Scene */
-.arc-scene:hover {
-  cursor: none !important;
-}
-
-.arc-scene:hover .a-card {
-  cursor: none !important;
-}
-
 /* ── WhatsApp Floating Button ── */
 .whatsapp-float {
   position: fixed;
@@ -4037,13 +3988,13 @@ body::after {
   font-weight: 500;
   letter-spacing: 3px;
   text-transform: uppercase;
-  color: rgba(255,255,255,0.5);
+  color: rgba(0, 0, 0, 0.75);
   margin-bottom: 20px;
 }
 
 /* FIX 7 — SERVICES HEADER PAD */
 .page-header {
-  padding: clamp(40px, 6vh, 80px) 0 clamp(20px, 3vh, 40px) !important;
+  padding: calc(var(--nav-height) + clamp(30px, 4vh, 50px)) 0 clamp(20px, 3vh, 40px) !important;
 }
 
 /* FIX 8 — SERVICES CTA BANNER */
@@ -4357,13 +4308,14 @@ body::after {
   display: flex;
   flex-direction: column-reverse;
   align-items: center;
-  gap: 15px;
+  gap: 20px;
 }
 
 .fab-options {
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 16px;
+  margin-bottom: 4px;
   opacity: 0;
   visibility: hidden;
   transform: translateY(20px);
