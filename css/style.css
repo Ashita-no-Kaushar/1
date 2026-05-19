@@ -1859,7 +1859,7 @@ select {
 }
 
 .who-left-text .blue {
-  color: var(--blue);
+  color: var(--white);
 }
 
 .who-left-text .lower {
@@ -2278,7 +2278,7 @@ select {
 }
 
 .service-block-title .blue-highlight {
-  color: var(--blue);
+  color: var(--white);
   display: block;
 }
 
@@ -2755,7 +2755,7 @@ select {
 }
 
 .contact-left h2 .blue {
-  color: var(--blue);
+  color: var(--white);
 }
 
 .contact-tagline {
