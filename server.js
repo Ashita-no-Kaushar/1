@@ -6,7 +6,7 @@ const fs = require('fs');
 const path = require('path');
 const agentHandler = require('./api/agent.js');
 
-const PORT = 8080;
+const PORT = process.env.PORT || 5000;
 
 const mimeTypes = {
   '.html': 'text/html',
