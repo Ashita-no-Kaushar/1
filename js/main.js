@@ -2,6 +2,58 @@
    Blink Beyond — Shared JavaScript
    ======================================== */
 
+/* ========================================
+   PAGE TRANSITION — BLUE CURTAIN WIPE
+   ======================================== */
+(function() {
+  var overlay = document.querySelector('.page-transition-overlay');
+  if (!overlay) return;
+
+  var cameFromTransition = false;
+  try { cameFromTransition = sessionStorage.getItem('bb_page_transition') === '1'; } catch(e) {}
+
+  if (cameFromTransition) {
+    try { sessionStorage.removeItem('bb_page_transition'); } catch(e) {}
+    overlay.style.transition = 'none';
+    overlay.style.transform = 'translateY(0%)';
+    overlay.style.pointerEvents = 'all';
+    overlay.offsetHeight;
+    overlay.style.transition = 'transform 0.75s cubic-bezier(0.76, 0, 0.24, 1)';
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        overlay.style.transform = 'translateY(-100%)';
+        overlay.style.pointerEvents = 'none';
+      });
+    });
+  }
+
+  document.addEventListener('click', function(e) {
+    var link = e.target.closest('a[href]');
+    if (!link) return;
+    var href = link.getAttribute('href');
+    if (!href || href.startsWith('#') || href.startsWith('http') || href.startsWith('mailto') || href.startsWith('tel') || href.startsWith('javascript')) return;
+    if (link.target === '_blank') return;
+    if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+    e.preventDefault();
+    var dest = href;
+
+    try { sessionStorage.setItem('bb_page_transition', '1'); } catch(e) {}
+
+    overlay.style.transition = 'none';
+    overlay.style.transform = 'translateY(100%)';
+    overlay.style.pointerEvents = 'all';
+    overlay.offsetHeight;
+    overlay.style.transition = 'transform 0.6s cubic-bezier(0.76, 0, 0.24, 1)';
+    requestAnimationFrame(function() {
+      requestAnimationFrame(function() {
+        overlay.style.transform = 'translateY(0%)';
+        setTimeout(function() { window.location.href = dest; }, 640);
+      });
+    });
+  });
+})();
+
 document.addEventListener('DOMContentLoaded', () => {
   /* ========================================
      FAB TOGGLE (floating action button)
