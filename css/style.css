@@ -4474,9 +4474,12 @@ body::after {
 @media (max-width: 900px) {
   .team-grid {
     grid-template-columns: repeat(2, 1fr);
-    margin-top: -60vh;
+    margin-top: 0;
     gap: 4vw;
   }
-  .team-item.t-1, .team-item.t-3, .team-item.t-5, .team-item.t-7 { margin-top: 0; }
-  .team-item.t-2, .team-item.t-4, .team-item.t-6, .team-item.t-8 { margin-top: 20vh; }
+  /* Remove stagger offsets to keep founders cards aligned */
+  .team-item.t-1, .team-item.t-3, .team-item.t-5, .team-item.t-7,
+  .team-item.t-2, .team-item.t-4, .team-item.t-6, .team-item.t-8 {
+    margin-top: 0;
+  }
 }
