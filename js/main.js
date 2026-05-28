@@ -1319,8 +1319,8 @@ window.addEventListener('load', () => {
   // ── ARC — Giant Rotating Circle (Osmo-style) — SEAMLESS LOOP ──
   const arcScene = document.getElementById('arcScene');
   const arcRing = document.getElementById('arcRing');
-  
-  if (arcScene && arcRing) {
+
+  if (arcScene && arcRing && window.innerWidth > 768) {
     const originalCards = gsap.utils.toArray('#arcRing > .a-card');
     const CARD_COUNT = originalCards.length; // 12
 

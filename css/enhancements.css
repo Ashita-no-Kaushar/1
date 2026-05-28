@@ -1162,120 +1162,127 @@
     --container-px: 20px;
   }
 
-  /* ── HERO — SCALED DOWN VERSION OF DESKTOP ── */
+  /* ── HERO — MOBILE CLEAN LAYOUT ── */
   .hero-page {
-    height: 140vh;
+    height: auto;
+    min-height: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: calc(var(--nav-height) + 40px) 20px 60px;
+    background: #F3F3F4;
     overflow: visible;
+    margin: 0;
   }
 
-  /* Arc cards stay in absolute positioning - desktop style scaled */
+  /* Hide arc cards completely on mobile */
   .arc-scene {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 5;
-    pointer-events: none;
-    overflow: visible;
-    -webkit-mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 80%);
-    mask-image: linear-gradient(to bottom, black 0%, black 60%, transparent 80%);
+    display: none !important;
   }
 
-  .arc-orbit-path {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-  }
-
+  .arc-orbit-path,
   .arc-ring {
-    position: absolute;
-    width: 150vw;
-    height: 150vw;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 2;
+    display: none !important;
   }
 
   .arc-scene .a-card {
-    position: absolute;
-    opacity: 0;
-    will-change: transform, opacity;
-    transition: none;
-    width: clamp(120px, 18vw, 180px);
-    height: clamp(75px, 11vw, 110px);
-    border-radius: 10px;
+    display: none !important;
   }
 
-  /* Video section stays visible */
+  /* Hide video modal until clicked */
   #card {
-    position: absolute;
-    display: block !important;
-    opacity: 0;
-    visibility: hidden;
+    display: none !important;
   }
 
   .hero-inner-text {
-    position: absolute;
-    display: block !important;
-    opacity: 0;
+    display: none !important;
   }
 
   .play-reel-btn {
-    display: block !important;
+    display: none !important;
   }
 
   .hero-text {
-    padding: calc(var(--nav-height) + clamp(36px, 8vh, 80px)) 24px clamp(32px, 6vh, 64px);
     text-align: center;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    flex: 1;
     max-width: 100%;
     margin: 0;
+    padding: 0;
+    position: relative;
+    z-index: 20;
+    pointer-events: auto;
   }
 
   .hero-location {
     font-size: 10px;
-    letter-spacing: 1.5px;
-    margin-bottom: clamp(16px, 3vh, 28px);
+    letter-spacing: 2px;
+    margin-bottom: 16px;
+    color: #888;
+    text-transform: uppercase;
+    font-weight: 600;
+    text-transform: capitalize;
   }
 
   .hero-headline {
-    font-size: clamp(36px, 10.5vw, 58px);
-    line-height: 1.05;
-    letter-spacing: -0.03em;
-    margin-bottom: clamp(16px, 3vh, 24px);
+    font-size: 44px;
+    line-height: 1.1;
+    letter-spacing: -1px;
+    margin-bottom: 16px;
     text-align: center;
+    font-weight: 800;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .headline-part {
+    display: block;
   }
 
   .hero-logo-icon {
-    width: clamp(36px, 9vw, 52px);
-    margin: 6px 0;
+    width: 44px;
+    height: auto;
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-logo-icon svg {
+    width: 100%;
+    height: auto;
   }
 
   .hero-sub {
-    font-size: clamp(14px, 3.8vw, 17px);
-    max-width: 340px;
+    font-size: 14px;
+    max-width: 100%;
     text-align: center;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: clamp(24px, 4vh, 36px);
-    line-height: 1.65;
+    margin: 0 0 24px 0;
+    line-height: 1.6;
+    color: #666;
   }
 
   .hero-pills {
     justify-content: center;
     flex-wrap: wrap;
     gap: 8px;
+    display: flex;
   }
 
   .pill {
-    font-size: 11.5px;
-    padding: 8px 16px;
+    font-size: 12px;
+    padding: 8px 18px;
+    border-radius: 20px;
+    background: #e8e8ed;
+    color: #666;
+    font-weight: 600;
+    border: none;
   }
 
   /* Mobile hero CTA block — inject via CSS after pills */
