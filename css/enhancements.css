@@ -1203,6 +1203,7 @@
   .a-card,
   .a-card-clone,
   #card,
+  #card-anchor,
   .hero-inner-text,
   .play-reel-btn {
     display: none !important;

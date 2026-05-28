@@ -203,7 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const cardElementsToFade = document.querySelectorAll('#card-label, #card-timer');
   const heroPage = document.getElementById('hero');
 
-  if (card && anchor && heroPage) {
+  if (card && anchor && heroPage && window.innerWidth > 768) {
     let scrollProg = 0;
     let targetProg = 0;
     let rafId = null;
