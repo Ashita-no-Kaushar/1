@@ -1175,7 +1175,7 @@
     overflow: hidden;
   }
 
-  /* Replace arc with a mobile-friendly horizontal scroll of cards */
+  /* Hero arc cards - 2-column grid on mobile */
   .arc-scene {
     position: relative;
     width: 100%;
@@ -1184,8 +1184,12 @@
     mask-image: none;
     pointer-events: auto;
     overflow: visible;
-    margin-top: 16px;
-    flex-shrink: 0;
+    margin-top: 20px;
+    display: grid !important;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 0 16px;
+    z-index: 5;
   }
 
   .arc-orbit-path,
@@ -1195,48 +1199,55 @@
 
   .arc-scene .a-card {
     position: relative;
-    width: clamp(160px, 42vw, 220px);
-    height: clamp(100px, 26vw, 140px);
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1.4 / 1;
     border-radius: 12px;
     transform: none;
     opacity: 1;
     left: auto;
     top: auto;
+    right: auto;
+    bottom: auto;
   }
 
-  .arc-scene .a-card-clone {
-    display: none;
+  /* Video section - show on mobile as modal/fullscreen */
+  #card {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) !important;
+    width: 90vw;
+    height: 70vh;
+    max-width: 100%;
+    max-height: 100%;
+    display: block !important;
+    z-index: 1000;
+    border-radius: 12px;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transition: all 0.3s ease;
   }
 
-  .arc-scene {
-    display: flex !important;
-    flex-direction: row;
-    flex-wrap: nowrap;
-    gap: 10px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    scroll-snap-type: x mandatory;
-    padding: 0 20px 12px;
-    scrollbar-width: none;
-  }
-
-  .arc-scene::-webkit-scrollbar {
-    display: none;
-  }
-
-  .arc-scene .a-card {
-    scroll-snap-align: start;
-    flex-shrink: 0;
+  #card.active {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
   }
 
   .hero-inner-text {
-    display: none !important;
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    z-index: 10;
   }
 
-  /* Hide scroll-driven card (expanding video) on mobile */
-  #card {
-    display: none !important;
+  .play-reel-btn {
+    display: flex !important;
+    gap: 8px;
+    align-items: center;
   }
 
   .hero-text {
