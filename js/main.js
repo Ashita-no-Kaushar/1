@@ -488,6 +488,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // ── Mobile scroll-reveal for BLINK/BUILD/BOOM sections ──
+  if (window.innerWidth <= 768 && 'IntersectionObserver' in window) {
+    const revealSections = document.querySelectorAll('.parallax-word-section');
+    const sectionObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('in-view');
+          sectionObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+    revealSections.forEach(s => sectionObserver.observe(s));
+  }
+
   // ── Contact form interaction ──
   const contactForm = document.getElementById('contactForm');
   // (Formspree handles the submission natively, so JS intercept is removed)

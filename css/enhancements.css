@@ -1466,7 +1466,7 @@
     overflow: visible !important;
   }
 
-  /* Reset script labels from absolute to in-flow */
+  /* Reset script labels from absolute to in-flow — tight spacing */
   .script-label,
   .script-label.top-left,
   .script-label.bottom-right {
@@ -1478,30 +1478,31 @@
     display: block !important;
     white-space: normal !important;
     font-family: var(--font-script) !important;
-    font-size: 16px !important;
+    font-size: 15px !important;
     font-weight: 400 !important;
     letter-spacing: 0 !important;
     text-transform: none !important;
-    color: rgba(0, 0, 0, 0.4) !important;
+    color: rgba(0, 0, 0, 0.38) !important;
     margin: 0 !important;
+    line-height: 1 !important;
   }
 
   .script-label.top-left {
     order: 0 !important;
-    margin-bottom: 2px !important;
+    margin-bottom: 0 !important;
   }
 
   .service-big-word {
     order: 1 !important;
-    font-size: clamp(60px, 18vw, 90px) !important;
+    font-size: clamp(64px, 20vw, 96px) !important;
     letter-spacing: -2px !important;
-    line-height: 0.9 !important;
-    margin: 4px 0 !important;
+    line-height: 0.88 !important;
+    margin: 2px 0 !important;
   }
 
   .script-label.bottom-right {
     order: 2 !important;
-    margin-top: 2px !important;
+    margin-top: 0 !important;
     align-self: flex-end !important;
   }
 
@@ -1510,10 +1511,10 @@
     line-height: 1.65 !important;
     color: rgba(0, 0, 0, 0.5) !important;
     max-width: 100% !important;
-    margin-top: 4px !important;
+    margin-top: 8px !important;
   }
 
-  /* Images: in-flow 2-column grid, always visible */
+  /* Images: in-flow 2-column grid */
   .parallax-images {
     position: relative !important;
     inset: auto !important;
@@ -1533,8 +1534,10 @@
     inset: auto !important;
     width: 100% !important;
     height: 130px !important;
-    opacity: 1 !important;
-    transform: none !important;
+    /* start hidden — Intersection Observer will trigger transition */
+    opacity: 0 !important;
+    transform: translateY(18px) scale(0.95) !important;
+    transition: opacity 0.45s ease, transform 0.45s cubic-bezier(0.16, 1, 0.3, 1) !important;
     will-change: auto !important;
     margin: 0 !important;
     padding: 0 !important;
@@ -1547,6 +1550,67 @@
     border-radius: 10px !important;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18) !important;
     display: block !important;
+  }
+
+  /* Text content: slide-up reveal on scroll */
+  .parallax-text-content {
+    opacity: 0 !important;
+    transform: translateY(26px) !important;
+    transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+                transform 0.5s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
+
+  /* ── In-view: triggered by Intersection Observer adding .in-view ── */
+  .parallax-word-section.in-view .parallax-text-content {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  .parallax-word-section.in-view .parallax-img {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Stagger each image tile */
+  .parallax-word-section.in-view .pimg-1 { transition-delay: 0.08s !important; }
+  .parallax-word-section.in-view .pimg-2 { transition-delay: 0.15s !important; }
+  .parallax-word-section.in-view .pimg-3 { transition-delay: 0.22s !important; }
+  .parallax-word-section.in-view .pimg-4 { transition-delay: 0.29s !important; }
+  .parallax-word-section.in-view .pimg-5 { transition-delay: 0.36s !important; }
+  .parallax-word-section.in-view .pimg-6 { transition-delay: 0.43s !important; }
+
+  /* ── Hero headline staggered load animation ── */
+  @keyframes heroWordIn {
+    from {
+      opacity: 0;
+      transform: translateY(22px);
+      filter: blur(2px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+  }
+
+  .hero-location {
+    animation: heroWordIn 0.4s ease 0.05s both !important;
+  }
+
+  .hero-headline .headline-part:first-child {
+    animation: heroWordIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.18s both !important;
+  }
+
+  .hero-logo-icon {
+    animation: heroWordIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both !important;
+  }
+
+  .hero-headline .headline-part:last-child {
+    animation: heroWordIn 0.55s cubic-bezier(0.16, 1, 0.3, 1) 0.38s both !important;
+  }
+
+  .hero-pills {
+    animation: heroWordIn 0.45s ease 0.52s both !important;
   }
 
   /* ── Trusted section ── */
