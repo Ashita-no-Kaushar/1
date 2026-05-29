@@ -8,7 +8,20 @@
 if ('scrollRestoration' in history) {
   history.scrollRestoration = 'manual';
 }
-window.scrollTo(0, 0);
+
+window.addEventListener('beforeunload', () => {
+  window.scrollTo(0, 0);
+});
+
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    window.scrollTo(0, 0);
+    if (typeof ScrollTrigger !== 'undefined') {
+      ScrollTrigger.clearScrollMemory && ScrollTrigger.clearScrollMemory('manual');
+      ScrollTrigger.refresh();
+    }
+  }, 50);
+});
 
 (function() {
   var overlay = document.querySelector('.page-transition-overlay');
