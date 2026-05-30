@@ -41,7 +41,7 @@
 
 .loader-fill-ghost,
 .loader-fill-text {
-  letter-spacing: clamp(4px, 1vw, 12px);
+  letter-spacing: clamp(1px, 0.4vw, 8px);
 }
 
 .loader-tagline {

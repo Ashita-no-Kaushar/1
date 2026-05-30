@@ -3697,14 +3697,18 @@ body.nav-open .ticker-wrap {
   position: relative;
   z-index: 2;
   text-align: center;
+  width: 100%;
+  padding: 0 4vw;
+  box-sizing: border-box;
 }
 
 /* Large wordmark with progressive fill */
 .loader-wordmark-wrap {
   position: relative;
-  display: inline-block;
+  display: block;
+  width: 100%;
   line-height: 1;
-  padding: 0 clamp(8px, 1vw, 18px);
+  overflow: hidden;
 }
 
 /* Shared text style for both layers */
@@ -3712,9 +3716,9 @@ body.nav-open .ticker-wrap {
 .loader-fill-text {
   font-family: 'Righteous', sans-serif;
   font-weight: 400;
-  font-size: clamp(64px, 15vw, 210px);
+  font-size: clamp(24px, 11.5vw, 210px);
   text-transform: uppercase;
-  letter-spacing: clamp(2px, 0.45vw, 8px);
+  letter-spacing: clamp(1px, 0.4vw, 8px);
   display: block;
   white-space: nowrap;
   line-height: 0.9;
@@ -3730,6 +3734,8 @@ body.nav-open .ticker-wrap {
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
+  text-align: center;
   background: linear-gradient(to right, #ffffff 0%, #ffffff 0%, rgba(255, 255, 255, 0.24) 0%);
   -webkit-background-clip: text;
   background-clip: text;
