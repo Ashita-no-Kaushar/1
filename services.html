@@ -22,6 +22,11 @@
       if (hasCookie) {
         document.documentElement.classList.add('loader-skip');
       }
+      try {
+        if (sessionStorage.getItem('bb_page_transition') === '1') {
+          document.documentElement.classList.add('bb-entering');
+        }
+      } catch (e) {}
     })();
   </script>
 </head>

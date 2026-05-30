@@ -39,15 +39,20 @@ window.addEventListener('load', () => {
 
   if (cameFromTransition) {
     try { sessionStorage.removeItem('bb_page_transition'); } catch(e) {}
-    overlay.style.transition = 'none';
-    overlay.style.transform = 'translateY(0%)';
-    overlay.style.pointerEvents = 'all';
-    overlay.offsetHeight;
-    overlay.style.transition = 'transform 0.75s cubic-bezier(0.76, 0, 0.24, 1)';
+    // Overlay is already covering the screen via .bb-entering CSS set in <head>.
+    // Remove the class so GSAP can take over, then slide the curtain upward.
+    document.documentElement.classList.remove('bb-entering');
+    gsap.set(overlay, { y: '0%', pointerEvents: 'all' });
     requestAnimationFrame(function() {
       requestAnimationFrame(function() {
-        overlay.style.transform = 'translateY(-100%)';
-        overlay.style.pointerEvents = 'none';
+        gsap.to(overlay, {
+          y: '-100%',
+          duration: 0.9,
+          ease: 'power3.inOut',
+          onComplete: function() {
+            gsap.set(overlay, { pointerEvents: 'none' });
+          }
+        });
       });
     });
   }
@@ -65,16 +70,14 @@ window.addEventListener('load', () => {
 
     try { sessionStorage.setItem('bb_page_transition', '1'); } catch(e) {}
 
-    overlay.style.transition = 'none';
-    overlay.style.transform = 'translateY(100%)';
-    overlay.style.pointerEvents = 'all';
-    overlay.offsetHeight;
-    overlay.style.transition = 'transform 0.6s cubic-bezier(0.76, 0, 0.24, 1)';
-    requestAnimationFrame(function() {
-      requestAnimationFrame(function() {
-        overlay.style.transform = 'translateY(0%)';
-        setTimeout(function() { window.location.href = dest; }, 640);
-      });
+    gsap.set(overlay, { y: '100%', pointerEvents: 'all' });
+    gsap.to(overlay, {
+      y: '0%',
+      duration: 0.7,
+      ease: 'power3.inOut',
+      onComplete: function() {
+        window.location.href = dest;
+      }
     });
   });
 })();

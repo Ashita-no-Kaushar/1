@@ -156,6 +156,11 @@
   will-change: transform;
 }
 
+/* Set by inline <head> script before first paint — prevents content flash on page enter */
+.bb-entering .page-transition-overlay {
+  transform: translateY(0%) !important;
+}
+
 /* ========================================
    HERO SECTION — IMPROVED
    ======================================== */

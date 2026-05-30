@@ -25,6 +25,11 @@
       if (seen) {
         document.documentElement.classList.add('bb-loader-skip');
       }
+      try {
+        if (sessionStorage.getItem('bb_page_transition') === '1') {
+          document.documentElement.classList.add('bb-entering');
+        }
+      } catch (e) {}
     })();
   </script>
   <link rel="stylesheet" href="css/style.css">
