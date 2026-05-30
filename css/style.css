@@ -1991,11 +1991,84 @@ body.nav-open .ticker-wrap {
     cursor: auto;
   }
 
+  /* Touch devices: show reveal content as a persistent bottom bar */
   .magnetic-reveal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    top: auto;
+    width: 100% !important;
+    height: auto !important;
+    border-radius: 0 0 24px 24px;
+    background: rgba(45, 46, 220, 0.72);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.18);
+    transform: none !important;
+    box-shadow: none;
+    padding: 14px 20px;
+    z-index: 20;
+    transition: none;
+    animation: none;
+  }
+
+  .magnetic-reveal::before {
     display: none;
   }
 
-  /* Disable magnetic effect on mobile */
+  .magnetic-reveal-inner {
+    position: static;
+    width: 100%;
+    height: auto;
+    transform: none !important;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .magnetic-reveal-content {
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    padding: 0;
+    width: 100%;
+  }
+
+  .magnetic-reveal-content .reveal-icon {
+    font-size: 22px;
+    margin-bottom: 0;
+    animation: none;
+    flex-shrink: 0;
+  }
+
+  .magnetic-reveal-content .reveal-title {
+    font-size: 13px;
+    letter-spacing: 1.5px;
+    white-space: nowrap;
+    flex: 1;
+  }
+
+  .magnetic-reveal-content .reveal-subtitle {
+    display: none;
+  }
+
+  .magnetic-reveal-content .reveal-cta {
+    margin-top: 0;
+    margin-left: auto;
+    font-size: 11px;
+    padding: 5px 14px;
+    letter-spacing: 2px;
+    flex-shrink: 0;
+  }
+
+  /* Hide the "Tap to Explore" hint pill — the bottom bar replaces it */
+  .info-card .info-card-content::after {
+    display: none !important;
+  }
 }
 
 /* ========================================
