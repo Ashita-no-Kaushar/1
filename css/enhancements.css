@@ -1677,6 +1677,28 @@
     letter-spacing: -1px;
   }
 
+  /* Mobile tap button — whole card is a link, this makes it obvious */
+  .info-card .info-card-content {
+    display: flex;
+    flex-direction: column;
+  }
+  .info-card .info-card-content::after {
+    content: "Tap to Explore →";
+    display: inline-block;
+    align-self: flex-start;
+    margin-top: 20px;
+    padding: 8px 18px;
+    border: 1.5px solid rgba(255, 255, 255, 0.55);
+    border-radius: 30px;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(4px);
+  }
+
   /* ── About page ── */
   .who-section {
     padding-top: calc(var(--nav-height) + 32px);
