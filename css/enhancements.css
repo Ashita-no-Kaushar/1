@@ -1192,6 +1192,12 @@
     order: 1;
   }
 
+  /* Always stack badge above title on mobile — never side-by-side */
+  .service-block-header {
+    flex-direction: column;
+    gap: 10px;
+  }
+
   .who-grid {
     grid-template-columns: 1fr;
     gap: clamp(24px, 4vh, 48px);

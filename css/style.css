@@ -2625,6 +2625,12 @@ body.nav-open .ticker-wrap {
   .service-block:nth-child(even) .service-block-left {
     order: 1;
   }
+
+  /* Always stack badge above title on mobile — never side-by-side */
+  .service-block-header {
+    flex-direction: column;
+    gap: 10px;
+  }
   
   .service-sub-grid {
     grid-template-columns: 1fr;
