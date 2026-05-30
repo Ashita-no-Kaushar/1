@@ -1856,6 +1856,10 @@
   /* FAB is position:fixed — no body padding needed */
 
   /* ── Footer ── */
+  .footer-brand-text {
+    color: #ffffff !important;
+  }
+
   .footer-top {
     padding: 40px 0 32px !important;
   }
