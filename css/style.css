@@ -89,7 +89,7 @@ select {
    ======================================== */
 .ticker-wrap {
   position: absolute;
-  top: 112px;
+  top: 92px;
   left: 50%;
   transform: translateX(-50%);
   width: 92vw;
