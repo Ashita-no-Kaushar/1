@@ -26,7 +26,12 @@ window.addEventListener('load', () => {
   window.scrollTo(0, 0);
   if (typeof ScrollTrigger !== 'undefined') {
     ScrollTrigger.clearScrollMemory && ScrollTrigger.clearScrollMemory('manual');
-    ScrollTrigger.refresh();
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        window.scrollTo(0, 0);
+        ScrollTrigger.refresh();
+      });
+    });
   }
 });
 
