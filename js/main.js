@@ -1470,8 +1470,8 @@ window.addEventListener('load', () => {
           ease: "none",
           scrollTrigger: {
             trigger: item,
-            start: "top bottom", // Start when it enters the viewport
-            end: "center 40%",   // Finish scaling when it reaches slightly above center
+            start: "top bottom",
+            end: "center 40%",
             scrub: true
           }
         }
@@ -1479,3 +1479,26 @@ window.addEventListener('load', () => {
     });
   }
 })();
+
+/* ========================================
+   FOUNDER CARDS — MOBILE TAP TO FLIP
+   ======================================== */
+(function () {
+  const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
+  if (!isTouchDevice) return;
+
+  document.querySelectorAll('.flip-card').forEach(function (card) {
+    card.addEventListener('click', function (e) {
+      e.stopPropagation();
+      card.classList.toggle('flipped');
+    });
+  });
+
+  document.addEventListener('click', function (e) {
+    if (!e.target.closest('.flip-card')) {
+      document.querySelectorAll('.flip-card.flipped').forEach(function (card) {
+        card.classList.remove('flipped');
+      });
+    }
+  });
+}());

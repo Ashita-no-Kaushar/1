@@ -1857,7 +1857,11 @@
   }
 
   .flip-card {
-    height: clamp(300px, 55vw, 400px);
+    height: 460px;
+  }
+
+  .flip-tap-hint {
+    display: flex;
   }
 
   /* ── Testimonials ── */
@@ -2073,7 +2077,7 @@
   }
 
   .flip-card {
-    height: clamp(280px, 65vw, 360px);
+    height: 480px;
   }
 
   .page-header h1 {
