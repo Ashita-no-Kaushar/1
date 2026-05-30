@@ -1324,86 +1324,19 @@ select {
   }
 }
 
-/* Mobile — clean vertical layout, no animations */
+/* Mobile — scroll animation preserved, images hidden */
 @media (max-width: 768px) {
   .parallax-word-section {
-    height: auto !important;
-    padding: 60px 20px !important;
-    background: #fff !important;
-    position: relative !important;
-    min-height: auto !important;
+    min-height: 100vh;
+    background: #F3F3F4;
   }
 
   .parallax-sticky {
-    position: relative !important;
-    height: auto !important;
-    display: flex !important;
-    flex-direction: column !important;
-    padding: 0 !important;
-    min-height: auto !important;
-  }
-
-  .parallax-text-content {
-    position: relative !important;
-    margin-bottom: 40px !important;
-    z-index: 2 !important;
-    order: -1 !important;
+    min-height: 100vh;
   }
 
   .parallax-images {
-    position: relative !important;
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 12px !important;
-    width: 100% !important;
-    height: auto !important;
-    z-index: 1 !important;
-    left: auto !important;
-    top: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-    inset: auto !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  .parallax-img {
-    position: relative !important;
-    left: auto !important;
-    top: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-    width: 100% !important;
-    height: 140px !important;
-    opacity: 1 !important;
-    transform: none !important;
-    will-change: auto !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  .parallax-img img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    border-radius: 10px !important;
-    display: block !important;
-  }
-
-  .pimg-1,
-  .pimg-2,
-  .pimg-3,
-  .pimg-4,
-  .pimg-5,
-  .pimg-6 {
-    position: relative !important;
-    left: auto !important;
-    top: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-    width: 100% !important;
-    height: 140px !important;
-    margin: 0 !important;
+    display: none !important;
   }
 
   .service-big-word {

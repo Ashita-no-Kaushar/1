@@ -443,9 +443,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ── Parallax Scroll-Driven Image Animation ──
+  // ── Parallax Scroll-Driven Animation (all screen sizes) ──
   const parallaxSections = document.querySelectorAll('.parallax-word-section');
-  if (parallaxSections.length && window.innerWidth > 768) {
+  if (parallaxSections.length) {
     parallaxSections.forEach((section, i) => {
       // Stacking order for pinned sections
       gsap.set(section, { zIndex: i + 1 });
@@ -479,53 +479,40 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       }
 
-      // Parallax Images Animation via GSAP
-      const imgs = section.querySelectorAll('.parallax-img');
-      imgs.forEach((img, index) => {
-        const speed = parseFloat(img.dataset.speed) || 0.6;
-        const isLeft = index % 2 === 0;
-        const directionX = isLeft ? -1 : 1;
-        
-        // Use fromTo to ensure scrub correctly interpolates between these exact values
-        gsap.fromTo(img, 
-          {
-            x: `${directionX * 15}vw`,
-            y: `${25 * speed}vh`,
-            rotation: directionX * 15,
-            scale: 0.85,
-            opacity: 0,
-          },
-          {
-            x: "0vw",
-            y: "0vh",
-            rotation: 0,
-            scale: 1,
-            opacity: 1,
-            ease: "none",
-            scrollTrigger: {
-              trigger: section,
-              start: "top bottom", 
-              end: "top top",      
-              scrub: true,
-            }
-          }
-        );
-      });
-    });
-  }
+      // Parallax Images Animation — desktop only (hidden on mobile via CSS)
+      if (window.innerWidth > 768) {
+        const imgs = section.querySelectorAll('.parallax-img');
+        imgs.forEach((img, index) => {
+          const speed = parseFloat(img.dataset.speed) || 0.6;
+          const isLeft = index % 2 === 0;
+          const directionX = isLeft ? -1 : 1;
 
-  // ── Mobile scroll-reveal for BLINK/BUILD/BOOM sections ──
-  if (window.innerWidth <= 768 && 'IntersectionObserver' in window) {
-    const revealSections = document.querySelectorAll('.parallax-word-section');
-    const sectionObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-          sectionObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    revealSections.forEach(s => sectionObserver.observe(s));
+          gsap.fromTo(img,
+            {
+              x: `${directionX * 15}vw`,
+              y: `${25 * speed}vh`,
+              rotation: directionX * 15,
+              scale: 0.85,
+              opacity: 0,
+            },
+            {
+              x: "0vw",
+              y: "0vh",
+              rotation: 0,
+              scale: 1,
+              opacity: 1,
+              ease: "none",
+              scrollTrigger: {
+                trigger: section,
+                start: "top bottom",
+                end: "top top",
+                scrub: true,
+              }
+            }
+          );
+        });
+      }
+    });
   }
 
   // ── Contact form interaction ──
