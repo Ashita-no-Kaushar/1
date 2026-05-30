@@ -1324,15 +1324,27 @@ select {
   }
 }
 
-/* Mobile — scroll animation preserved, images hidden */
+/* Mobile — images hidden, clean centered layout with scroll-reveal */
 @media (max-width: 768px) {
   .parallax-word-section {
     min-height: 100vh;
     background: #F3F3F4;
+    overflow: visible;
   }
 
   .parallax-sticky {
     min-height: 100vh;
+    overflow: visible;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .parallax-text-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 24px;
+    text-align: center;
   }
 
   .parallax-images {

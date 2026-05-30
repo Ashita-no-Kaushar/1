@@ -443,76 +443,77 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
-  // ── Parallax Scroll-Driven Animation (all screen sizes) ──
+  // ── Parallax Scroll-Driven Animation ──
   const parallaxSections = document.querySelectorAll('.parallax-word-section');
   if (parallaxSections.length) {
-    parallaxSections.forEach((section, i) => {
-      // Stacking order for pinned sections
-      gsap.set(section, { zIndex: i + 1 });
+    if (window.innerWidth > 768) {
+      // ── Desktop: pin + card-rotation + image parallax ──
+      parallaxSections.forEach((section, i) => {
+        gsap.set(section, { zIndex: i + 1 });
 
-      const inner = section.querySelector('.parallax-sticky');
-      if (!inner) return;
+        const inner = section.querySelector('.parallax-sticky');
+        if (!inner) return;
 
-      // Pin current section when it reaches the bottom
-      if (i < parallaxSections.length - 1) {
-        ScrollTrigger.create({
-          trigger: section,
-          start: 'bottom bottom',
-          end: 'bottom top',
-          pin: true,
-          pinSpacing: false,
-        });
-      }
-
-      // Rotate incoming section like a card
-      if (i > 0) {
-        gsap.set(inner, { rotation: 30, transformOrigin: 'bottom left' });
-        gsap.to(inner, {
-          rotation: 0,
-          ease: 'none',
-          scrollTrigger: {
+        if (i < parallaxSections.length - 1) {
+          ScrollTrigger.create({
             trigger: section,
-            start: 'top bottom',
-            end: 'top 25%',
-            scrub: true,
-          },
-        });
-      }
+            start: 'bottom bottom',
+            end: 'bottom top',
+            pin: true,
+            pinSpacing: false,
+          });
+        }
 
-      // Parallax Images Animation — desktop only (hidden on mobile via CSS)
-      if (window.innerWidth > 768) {
+        if (i > 0) {
+          gsap.set(inner, { rotation: 30, transformOrigin: 'bottom left' });
+          gsap.to(inner, {
+            rotation: 0,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: section,
+              start: 'top bottom',
+              end: 'top 25%',
+              scrub: true,
+            },
+          });
+        }
+
         const imgs = section.querySelectorAll('.parallax-img');
         imgs.forEach((img, index) => {
           const speed = parseFloat(img.dataset.speed) || 0.6;
           const isLeft = index % 2 === 0;
           const directionX = isLeft ? -1 : 1;
-
           gsap.fromTo(img,
+            { x: `${directionX * 15}vw`, y: `${25 * speed}vh`, rotation: directionX * 15, scale: 0.85, opacity: 0 },
             {
-              x: `${directionX * 15}vw`,
-              y: `${25 * speed}vh`,
-              rotation: directionX * 15,
-              scale: 0.85,
-              opacity: 0,
-            },
-            {
-              x: "0vw",
-              y: "0vh",
-              rotation: 0,
-              scale: 1,
-              opacity: 1,
-              ease: "none",
-              scrollTrigger: {
-                trigger: section,
-                start: "top bottom",
-                end: "top top",
-                scrub: true,
-              }
+              x: "0vw", y: "0vh", rotation: 0, scale: 1, opacity: 1, ease: "none",
+              scrollTrigger: { trigger: section, start: "top bottom", end: "top top", scrub: true }
             }
           );
         });
-      }
-    });
+      });
+    } else {
+      // ── Mobile: scroll-reveal fade+slide (no pinning, no initial rotation) ──
+      parallaxSections.forEach((section) => {
+        const inner = section.querySelector('.parallax-sticky');
+        if (!inner) return;
+
+        gsap.fromTo(inner,
+          { opacity: 0, y: 50 },
+          {
+            opacity: 1,
+            y: 0,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: section,
+              start: 'top 85%',
+              end: 'top 35%',
+              scrub: 1,
+            }
+          }
+        );
+      });
+    }
   }
 
   // ── Contact form interaction ──
