@@ -24,6 +24,7 @@
 
 .loader-wordmark-wrap {
   position: relative;
+  overflow: visible;
 }
 
 /* Animated scan-line behind wordmark */
@@ -41,7 +42,8 @@
 
 .loader-fill-ghost,
 .loader-fill-text {
-  letter-spacing: clamp(1px, 0.4vw, 8px);
+  font-size: clamp(24px, 10.5vw, 210px);
+  letter-spacing: clamp(1px, 0.35vw, 8px);
 }
 
 .loader-tagline {
@@ -2140,6 +2142,7 @@
 .bbb-stack-wrapper {
   display: block;
   position: relative;
+  isolation: isolate;
 }
 
 /* ========================================
