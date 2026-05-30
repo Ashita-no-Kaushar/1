@@ -1714,10 +1714,23 @@
     line-height: 1.1;
   }
 
+  /* Section clips the circle — allow overflow so full circle is visible */
+  .who-section {
+    overflow: visible !important;
+  }
+
   .who-orbit-container {
-    width: 260px !important;
-    height: 260px !important;
+    /* Circle SVG has r=175 → needs ≥350px to show fully.
+       Use 90vw so it scales naturally on all phone widths.   */
+    width: min(350px, 90vw) !important;
+    height: min(350px, 90vw) !important;
+    overflow: visible !important;
     margin: 0 auto;
+  }
+
+  /* Scale orbit items text to stay proportional on small screens */
+  .who-orbit-item {
+    font-size: clamp(20px, 5.5vw, 30px) !important;
   }
 
   .whatwedo-section {
