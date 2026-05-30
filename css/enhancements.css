@@ -1362,11 +1362,7 @@
 
   /* Mobile hero CTA block — inject via CSS after pills */
   .hero-mobile-cta {
-    display: flex;
-    gap: 12px;
-    margin-top: clamp(24px, 4vh, 40px);
-    flex-wrap: wrap;
-    justify-content: center;
+    display: none !important;
   }
 
   .hero-mobile-cta a {
