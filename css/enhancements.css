@@ -1720,12 +1720,31 @@
   }
 
   .who-orbit-container {
-    /* Circle SVG has r=175 → needs ≥350px to show fully.
-       Use 90vw so it scales naturally on all phone widths.   */
+    /* Circle SVG r=175 → needs ≥350px diameter to show fully */
     width: min(350px, 90vw) !important;
-    height: min(350px, 90vw) !important;
+    /* Let height be driven by in-flow content (the text below the circle) */
+    height: auto !important;
     overflow: visible !important;
     margin: 0 auto;
+    position: relative !important;
+  }
+
+  /* Pull inner text OUT of the absolute layer:
+     make it position:static so it's in normal flow, then push it
+     below the circle with a top margin equal to the circle height */
+  .who-inner-text {
+    position: static !important;
+    transform: none !important;
+    width: 85% !important;
+    /* margin-top pushes text below the absolutely-positioned circle */
+    margin: min(350px, 90vw) auto 0 !important;
+    text-align: center;
+  }
+
+  .who-inner-text p {
+    font-size: 13px !important;
+    line-height: 1.65 !important;
+    color: rgba(255, 255, 255, 0.65) !important;
   }
 
   /* Scale orbit items text to stay proportional on small screens */
