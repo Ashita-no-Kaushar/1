@@ -1502,12 +1502,18 @@ window.addEventListener('load', () => {
 
 }());
 
-// ── Founder flip-cards: works on ALL screens (hover + tap + click) ──
+// ── Founder flip-cards ──
+// Detects device type: touch (mobile/tablet/iPad) vs hover (laptop/computer)
+// Touch  → "TAP FOR INFO"   — click toggles the card flip
+// Hover  → "HOVER FOR INFO" — CSS hover reveals info, no flip needed
 (function () {
   var flipCards = document.querySelectorAll('.flip-card');
   if (!flipCards.length) return;
 
-  // Restore saved state immediately — no hint flash on revisit
+  // Same media query used in CSS — matches laptop/desktop with a real mouse
+  var isHoverDevice = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  // Restore saved state immediately so hint never flashes on revisit
   if (localStorage.getItem('bbFlipHintSeen')) {
     document.body.classList.add('bb-flip-hint-seen');
   }
@@ -1518,26 +1524,34 @@ window.addEventListener('load', () => {
     document.body.classList.add('bb-flip-hint-seen');
   }
 
-  flipCards.forEach(function (card) {
-    // Desktop: first mouseenter permanently hides all hints
-    card.addEventListener('mouseenter', function () {
-      markHintsSeen();
-    }, { once: true });
-
-    // All screens: click toggles flip + permanently hides all hints
-    card.addEventListener('click', function (e) {
-      e.stopPropagation();
-      card.classList.toggle('flipped');
-      markHintsSeen();
+  if (isHoverDevice) {
+    // ── LAPTOP / COMPUTER (mouse hover) ──
+    // Info is shown via CSS :hover — no click-flip needed.
+    // Just mark hints as permanently seen on first mouseenter.
+    flipCards.forEach(function (card) {
+      card.addEventListener('mouseenter', function () {
+        markHintsSeen();
+      }, { once: true });
     });
-  });
 
-  // Click outside any card → unflip all
-  document.addEventListener('click', function (e) {
-    if (!e.target.closest('.flip-card')) {
-      flipCards.forEach(function (card) {
-        card.classList.remove('flipped');
+  } else {
+    // ── MOBILE / TABLET / iPAD (touch) ──
+    // No hover, so tapping flips the card to reveal info.
+    flipCards.forEach(function (card) {
+      card.addEventListener('click', function (e) {
+        e.stopPropagation();
+        card.classList.toggle('flipped');
+        markHintsSeen();
       });
-    }
-  });
+    });
+
+    // Tap outside any card → unflip all
+    document.addEventListener('click', function (e) {
+      if (!e.target.closest('.flip-card')) {
+        flipCards.forEach(function (card) {
+          card.classList.remove('flipped');
+        });
+      }
+    });
+  }
 }());
