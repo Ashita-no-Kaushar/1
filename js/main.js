@@ -493,26 +493,22 @@ document.addEventListener('DOMContentLoaded', () => {
         });
       });
     } else {
-      // ── Mobile: scroll-reveal fade+slide (no pinning, no initial rotation) ──
-      parallaxSections.forEach((section) => {
-        const inner = section.querySelector('.parallax-sticky');
-        if (!inner) return;
-
-        gsap.fromTo(inner,
-          { opacity: 0, y: 50 },
-          {
-            opacity: 1,
-            y: 0,
-            ease: 'power2.out',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top 85%',
-              end: 'top 35%',
-              scrub: 1,
+      // ── Mobile: IntersectionObserver reveal (reliable, content always visible as fallback) ──
+      if ('IntersectionObserver' in window) {
+        const io = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.querySelector('.parallax-text-content')?.classList.add('mobile-revealed');
+              io.unobserve(entry.target);
             }
-          }
-        );
-      });
+          });
+        }, { threshold: 0.1 });
+
+        parallaxSections.forEach(section => {
+          section.querySelector('.parallax-text-content')?.classList.add('mobile-reveal-init');
+          io.observe(section);
+        });
+      }
     }
   }
 
