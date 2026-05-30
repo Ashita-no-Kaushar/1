@@ -1692,31 +1692,10 @@
     letter-spacing: -1px;
   }
 
-  /* Mobile tap button — whole card is a link, this makes it obvious */
+  /* Mobile: flex column so the hint pill aligns correctly */
   .info-card .info-card-content {
     display: flex;
     flex-direction: column;
-  }
-  .info-card .info-card-content::after {
-    content: "Tap to Explore →";
-    display: inline-block;
-    align-self: flex-start;
-    margin-top: 20px;
-    padding: 8px 18px;
-    border: 1.5px solid rgba(255, 255, 255, 0.55);
-    border-radius: 30px;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.9);
-    background: rgba(255, 255, 255, 0.08);
-    backdrop-filter: blur(4px);
-  }
-
-  /* Once user has tapped any info-card, hide the hint on all cards */
-  body.bb-tap-hint-seen .info-card .info-card-content::after {
-    display: none;
   }
 
   /* ── About page ── */
@@ -2304,6 +2283,47 @@
   #section-blink .parallax-images,
   #section-build .parallax-images,
   #section-boom  .parallax-images  { display: none !important; }
+}
+
+/* ========================================
+   INFO-CARD EXPLORE HINT — ALL SCREENS
+   Touch (mobile/tablet/iPad) → "TAP TO EXPLORE"
+   Mouse (laptop/computer)    → "HOVER TO EXPLORE"
+   ======================================== */
+.info-card .info-card-content {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Default: touch devices — "Tap to Explore" */
+.info-card .info-card-content::after {
+  content: "Tap to Explore →";
+  display: inline-block;
+  align-self: flex-start;
+  margin-top: 20px;
+  padding: 8px 18px;
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
+  border-radius: 30px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(4px);
+  animation: hintPulse 2s ease-in-out infinite;
+}
+
+/* Mouse/hover devices (laptop, desktop) → "Hover to Explore" */
+@media (hover: hover) and (pointer: fine) {
+  .info-card .info-card-content::after {
+    content: "Hover to Explore →";
+  }
+}
+
+/* Once the user has interacted with any card, permanently hide all hints */
+body.bb-card-hint-seen .info-card .info-card-content::after {
+  display: none !important;
 }
 
 /* ========================================

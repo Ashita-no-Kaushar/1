@@ -1481,25 +1481,46 @@ window.addEventListener('load', () => {
 })();
 
 /* ========================================
-   MOBILE TAP HINTS — ONE-TIME HIDE
+   INFO-CARD EXPLORE HINT — ALL SCREENS
+   Detects device type: touch (mobile/tablet/iPad) vs hover (laptop/computer)
+   Touch  → "TAP TO EXPLORE"   — hint hides permanently on first tap
+   Hover  → "HOVER TO EXPLORE" — hint hides permanently on first mouseenter
    ======================================== */
 (function () {
-  const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
-  if (!isTouchDevice) return;
+  var infocards = document.querySelectorAll('.info-card');
+  if (!infocards.length) return;
 
-  // ── Home info-cards: "Tap to Explore" ──
-  // Apply saved state immediately on load
-  if (localStorage.getItem('bbTapHintSeen')) {
-    document.body.classList.add('bb-tap-hint-seen');
+  // Same media query used in CSS — true for laptop/desktop with a real mouse
+  var isHoverDevice = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+  // Restore saved state immediately — no hint flash on revisit
+  if (localStorage.getItem('bbCardHintSeen')) {
+    document.body.classList.add('bb-card-hint-seen');
   }
 
-  document.querySelectorAll('.info-card').forEach(function (card) {
-    card.addEventListener('click', function () {
-      localStorage.setItem('bbTapHintSeen', '1');
-      document.body.classList.add('bb-tap-hint-seen');
-    }, { once: true });
-  });
+  function markCardHintSeen() {
+    if (document.body.classList.contains('bb-card-hint-seen')) return;
+    localStorage.setItem('bbCardHintSeen', '1');
+    document.body.classList.add('bb-card-hint-seen');
+  }
 
+  if (isHoverDevice) {
+    // ── LAPTOP / COMPUTER (mouse hover) ──
+    // Hint text says "Hover to Explore" — mark seen on first mouseenter
+    infocards.forEach(function (card) {
+      card.addEventListener('mouseenter', function () {
+        markCardHintSeen();
+      }, { once: true });
+    });
+  } else {
+    // ── MOBILE / TABLET / iPAD (touch) ──
+    // Hint text says "Tap to Explore" — mark seen on first tap/click
+    infocards.forEach(function (card) {
+      card.addEventListener('click', function () {
+        markCardHintSeen();
+      }, { once: true });
+    });
+  }
 }());
 
 // ── Founder flip-cards ──
