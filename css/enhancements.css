@@ -1377,9 +1377,14 @@
     display: inline-block !important;
   }
 
-  /* Mobile hero CTA block — inject via CSS after pills */
+  /* Mobile hero CTA block — shown below pills on mobile */
   .hero-mobile-cta {
-    display: none !important;
+    display: flex !important;
+    gap: 12px !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    margin-top: 24px !important;
+    width: 100% !important;
   }
 
   .hero-mobile-cta a {
