@@ -1183,6 +1183,15 @@
     direction: ltr;
   }
 
+  /* On mobile, even blocks have the header in service-block-right (DOM second).
+     Force it to render first so title always appears above the cards. */
+  .service-block:nth-child(even) .service-block-right {
+    order: -1;
+  }
+  .service-block:nth-child(even) .service-block-left {
+    order: 1;
+  }
+
   .who-grid {
     grid-template-columns: 1fr;
     gap: clamp(24px, 4vh, 48px);

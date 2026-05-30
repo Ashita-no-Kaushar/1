@@ -2619,9 +2619,11 @@ body.nav-open .ticker-wrap {
     grid-template-columns: 1fr;
   }
 
-  .service-block:nth-child(even) .service-block-left,
   .service-block:nth-child(even) .service-block-right {
-    order: unset;
+    order: -1;
+  }
+  .service-block:nth-child(even) .service-block-left {
+    order: 1;
   }
   
   .service-sub-grid {
