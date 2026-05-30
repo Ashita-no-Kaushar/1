@@ -1481,55 +1481,24 @@ window.addEventListener('load', () => {
 })();
 
 /* ========================================
-   MOBILE TAP INTERACTIONS (FLIP + INFO CARDS)
+   FOUNDER CARDS — MOBILE TAP TO FLIP
    ======================================== */
 (function () {
   const isTouchDevice = ('ontouchstart' in window) || (navigator.maxTouchPoints > 0);
   if (!isTouchDevice) return;
 
-  function closeAllFlipCards() {
-    document.querySelectorAll('.flip-card.flipped').forEach(function (c) {
-      c.classList.remove('flipped');
-    });
-  }
-
-  function closeAllInfoCards() {
-    document.querySelectorAll('.magnetic-card.is-hovered').forEach(function (c) {
-      c.classList.remove('is-hovered');
-    });
-  }
-
-  /* ── Founder flip cards — accordion (one open at a time) ── */
   document.querySelectorAll('.flip-card').forEach(function (card) {
     card.addEventListener('click', function (e) {
       e.stopPropagation();
-      var isFlipped = card.classList.contains('flipped');
-      closeAllFlipCards();
-      closeAllInfoCards();
-      if (!isFlipped) {
-        card.classList.add('flipped');
-      }
+      card.classList.toggle('flipped');
     });
   });
 
-  /* ── Info cards (About Us / Services) — tap to reveal, tap again to navigate ── */
-  document.querySelectorAll('.magnetic-card').forEach(function (card) {
-    card.addEventListener('click', function (e) {
-      if (!card.classList.contains('is-hovered')) {
-        e.preventDefault();
-        closeAllFlipCards();
-        closeAllInfoCards();
-        card.classList.add('is-hovered');
-      }
-      /* second tap: is-hovered is set — allow default <a> navigation */
-    });
-  });
-
-  /* ── Close everything when tapping outside ── */
   document.addEventListener('click', function (e) {
-    if (!e.target.closest('.flip-card') && !e.target.closest('.magnetic-card')) {
-      closeAllFlipCards();
-      closeAllInfoCards();
+    if (!e.target.closest('.flip-card')) {
+      document.querySelectorAll('.flip-card.flipped').forEach(function (card) {
+        card.classList.remove('flipped');
+      });
     }
   });
 }());

@@ -1697,37 +1697,6 @@
     color: rgba(255, 255, 255, 0.9);
     background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(4px);
-    transition: opacity 0.3s ease;
-  }
-
-  /* ── Info card mobile reveal — full overlay on tap ── */
-  .info-card.is-hovered .magnetic-reveal {
-    display: flex !important;
-    width: 100% !important;
-    height: 100% !important;
-    border-radius: 20px !important;
-    top: 0 !important;
-    left: 0 !important;
-    transform: none !important;
-    pointer-events: auto;
-  }
-
-  .info-card.is-hovered .magnetic-reveal-inner {
-    transform: translate(-50%, -50%) !important;
-  }
-
-  .info-card.is-hovered .magnetic-reveal-content .reveal-icon,
-  .info-card.is-hovered .magnetic-reveal-content .reveal-title,
-  .info-card.is-hovered .magnetic-reveal-content .reveal-subtitle,
-  .info-card.is-hovered .magnetic-reveal-content .reveal-cta {
-    opacity: 1 !important;
-    transform: none !important;
-    transition-delay: 0.1s;
-  }
-
-  .info-card.is-hovered .info-card-content::after {
-    opacity: 0;
-    pointer-events: none;
   }
 
   /* ── About page ── */
