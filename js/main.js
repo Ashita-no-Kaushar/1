@@ -514,18 +514,121 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  // ── Mobile scroll-reveal for BLINK/BUILD/BOOM sections ──
-  if (window.innerWidth <= 768 && 'IntersectionObserver' in window) {
-    const revealSections = document.querySelectorAll('.parallax-word-section');
-    const sectionObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('in-view');
-          sectionObserver.unobserve(entry.target);
-        }
+  // ── Mobile BLINK / BUILD / BOOM — immersive scroll animations ──
+  if (window.innerWidth <= 768 && typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    const mobileSections = document.querySelectorAll('.parallax-word-section');
+
+    // Per-section palette: [large blob, medium blob, small blob]
+    const palettes = [
+      ['rgba(79,70,229,0.18)', 'rgba(139,92,246,0.12)', 'rgba(79,70,229,0.09)'],
+      ['rgba(59,130,246,0.16)', 'rgba(79,70,229,0.10)', 'rgba(99,102,241,0.13)'],
+      ['rgba(79,70,229,0.22)', 'rgba(167,139,250,0.14)', 'rgba(59,130,246,0.10)'],
+    ];
+
+    mobileSections.forEach((section, idx) => {
+      const sticky = section.querySelector('.parallax-sticky');
+
+      // ── Section index label ──
+      const numEl = document.createElement('div');
+      numEl.className = 'mobile-section-num';
+      numEl.textContent = '0' + (idx + 1);
+      sticky.appendChild(numEl);
+
+      // ── Inject decorative blobs ──
+      const blobDefs = [
+        { w: 220, h: 220, left: '-60px',  top: '5%',    color: palettes[idx][0] },
+        { w: 150, h: 150, right: '-30px', bottom: '12%', color: palettes[idx][1] },
+        { w: 90,  h: 90,  left: '30%',   top: '8%',    color: palettes[idx][2] },
+        { w: 70,  h: 70,  right: '20%',  bottom: '25%', color: palettes[idx][1] },
+      ];
+      blobDefs.forEach(bd => {
+        const b = document.createElement('div');
+        b.className = 'mobile-blob';
+        b.style.cssText = [
+          `width:${bd.w}px`, `height:${bd.h}px`,
+          bd.left   ? `left:${bd.left}`   : `right:${bd.right}`,
+          bd.top    ? `top:${bd.top}`     : `bottom:${bd.bottom}`,
+          `background:${bd.color}`,
+        ].join(';');
+        sticky.appendChild(b);
       });
-    }, { threshold: 0.12 });
-    revealSections.forEach(s => sectionObserver.observe(s));
+
+      // ── Split big word into letter spans ──
+      const wordEl = section.querySelector('.service-big-word');
+      if (wordEl) {
+        wordEl.innerHTML = wordEl.textContent.trim()
+          .split('').map(ch => `<span class="word-letter">${ch}</span>`).join('');
+      }
+
+      const letters  = section.querySelectorAll('.word-letter');
+      const labels   = section.querySelectorAll('.script-label');
+      const desc     = section.querySelector('.service-word-desc');
+      const blobs    = section.querySelectorAll('.mobile-blob');
+
+      // ── Build the entrance timeline ──
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: section,
+          start: 'top 75%',
+          once: true,
+        },
+        defaults: { ease: 'power3.out' },
+      });
+
+      // Blobs bloom in
+      tl.to(blobs, { opacity: 1, scale: 1, duration: 1.0, stagger: 0.12, ease: 'power2.out' }, 0);
+
+      // Section-specific letter entrance
+      if (idx === 0) {
+        // BLINK — letters flash + drop in with a bounce
+        gsap.set(letters, { opacity: 0, y: 80, rotation: -18, scale: 0.6 });
+        tl.to(letters, {
+          opacity: 1, y: 0, rotation: 0, scale: 1,
+          duration: 0.65, stagger: 0.09, ease: 'back.out(2.2)',
+        }, 0.1);
+      } else if (idx === 1) {
+        // BUILD — letters rise up like stacking blocks
+        gsap.set(letters, { opacity: 0, y: 110, scaleY: 0.2, transformOrigin: 'bottom center' });
+        tl.to(letters, {
+          opacity: 1, y: 0, scaleY: 1,
+          duration: 0.55, stagger: 0.08, ease: 'back.out(1.8)',
+        }, 0.1);
+      } else {
+        // BOOM — letters implode from far-out scale, elastic settle
+        gsap.set(letters, { opacity: 0, scale: 3.5, x: (i) => (i % 2 === 0 ? -60 : 60) });
+        tl.to(letters, {
+          opacity: 1, scale: 1, x: 0,
+          duration: 0.8, stagger: 0.07, ease: 'elastic.out(1, 0.55)',
+        }, 0.05);
+      }
+
+      // Script labels sweep in
+      gsap.set(labels, { opacity: 0, x: idx === 2 ? 24 : -24 });
+      tl.to(labels, { opacity: 1, x: 0, duration: 0.45, stagger: 0.12 }, 0.55);
+
+      // Description rises up
+      if (desc) {
+        gsap.set(desc, { opacity: 0, y: 28 });
+        tl.to(desc, { opacity: 1, y: 0, duration: 0.5 }, 0.65);
+      }
+
+      // Section number fades in
+      gsap.set(numEl, { opacity: 0 });
+      tl.to(numEl, { opacity: 1, duration: 0.4 }, 0.3);
+
+      // ── Continuous floating for blobs ──
+      blobs.forEach((blob, bi) => {
+        gsap.to(blob, {
+          y: bi % 2 === 0 ? -28 : 22,
+          x: bi % 2 === 0 ? 14 : -18,
+          rotation: bi * 8,
+          duration: 3.5 + bi * 0.6,
+          repeat: -1, yoyo: true,
+          ease: 'sine.inOut',
+          delay: bi * 0.3,
+        });
+      });
+    });
   }
 
   // ── Contact form interaction ──

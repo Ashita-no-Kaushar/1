@@ -1324,115 +1324,138 @@ select {
   }
 }
 
-/* Mobile — clean vertical layout, no animations */
+/* Mobile — immersive full-screen sections, images hidden, scroll animations */
 @media (max-width: 768px) {
+
+  /* Hide images entirely */
+  .parallax-images {
+    display: none !important;
+  }
+
+  /* Full-screen section */
   .parallax-word-section {
-    height: auto !important;
-    padding: 60px 20px !important;
-    background: #fff !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    padding: 0 !important;
     position: relative !important;
-    min-height: auto !important;
+    overflow: hidden !important;
+    background: #F3F3F4 !important;
   }
 
   .parallax-sticky {
     position: relative !important;
-    height: auto !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
     display: flex !important;
     flex-direction: column !important;
-    padding: 0 !important;
-    min-height: auto !important;
+    align-items: center !important;
+    justify-content: center !important;
+    padding: 48px 28px !important;
+    background: #F3F3F4 !important;
   }
 
   .parallax-text-content {
     position: relative !important;
-    margin-bottom: 40px !important;
+    text-align: center !important;
     z-index: 2 !important;
-    order: -1 !important;
+    order: 0 !important;
+    margin-bottom: 0 !important;
   }
 
-  .parallax-images {
-    position: relative !important;
-    display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
-    gap: 12px !important;
-    width: 100% !important;
-    height: auto !important;
-    z-index: 1 !important;
-    left: auto !important;
-    top: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-    inset: auto !important;
+  /* Big word */
+  .service-big-word {
+    font-size: clamp(80px, 24vw, 110px) !important;
+    font-weight: 900 !important;
+    line-height: 1 !important;
+    letter-spacing: -3px !important;
     margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  .parallax-img {
-    position: relative !important;
-    left: auto !important;
-    top: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-    width: 100% !important;
-    height: 140px !important;
-    opacity: 1 !important;
-    transform: none !important;
-    will-change: auto !important;
-    margin: 0 !important;
-    padding: 0 !important;
-  }
-
-  .parallax-img img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    border-radius: 10px !important;
     display: block !important;
   }
 
-  .pimg-1,
-  .pimg-2,
-  .pimg-3,
-  .pimg-4,
-  .pimg-5,
-  .pimg-6 {
-    position: relative !important;
-    left: auto !important;
-    top: auto !important;
-    right: auto !important;
-    bottom: auto !important;
-    width: 100% !important;
-    height: 140px !important;
-    margin: 0 !important;
+  /* Per-letter spans for split animation */
+  .word-letter {
+    display: inline-block;
+    will-change: transform, opacity;
   }
 
-  .service-big-word {
-    font-size: 56px !important;
-    font-weight: 800 !important;
-    line-height: 1 !important;
-    margin: 0 0 12px 0 !important;
-    letter-spacing: -1px !important;
+  /* Script labels */
+  .service-word-wrap {
+    text-align: center !important;
+    margin-bottom: 28px !important;
+    position: relative !important;
+    display: inline-block !important;
   }
 
   .script-label {
-    font-size: 12px !important;
-    font-weight: 600 !important;
-    text-transform: uppercase !important;
-    letter-spacing: 2px !important;
-    margin: 0 0 12px 0 !important;
-    color: #888 !important;
+    font-family: var(--font-script) !important;
+    font-size: clamp(16px, 4vw, 22px) !important;
+    font-weight: 400 !important;
+    text-transform: none !important;
+    letter-spacing: 0 !important;
+    color: rgba(0,0,0,0.45) !important;
+    position: absolute !important;
+    white-space: nowrap !important;
+    will-change: opacity, transform;
   }
 
-  .service-word-wrap {
-    text-align: left !important;
-    margin-bottom: 20px !important;
+  .script-label.top-left {
+    top: -24px !important;
+    left: 0 !important;
   }
 
+  .script-label.bottom-right {
+    bottom: -20px !important;
+    right: 0 !important;
+  }
+
+  /* Description */
   .service-word-desc {
-    font-size: 13px !important;
-    line-height: 1.6 !important;
-    color: #666 !important;
-    max-width: 100% !important;
+    font-size: 14px !important;
+    line-height: 1.75 !important;
+    color: rgba(0,0,0,0.55) !important;
+    max-width: 290px !important;
+    margin: 28px auto 0 !important;
+    padding: 0 !important;
+    text-align: center !important;
+    will-change: opacity, transform;
+  }
+
+  /* Decorative animated blobs injected via JS */
+  .mobile-blob {
+    position: absolute;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0;
+    filter: blur(40px);
+    will-change: transform, opacity;
+  }
+
+  /* Subtle bottom accent */
+  .parallax-word-section::after {
+    content: '';
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 40px;
+    height: 3px;
+    background: var(--blue, #4f46e5);
+    border-radius: 2px;
+    opacity: 0.25;
+  }
+
+  /* Section index number */
+  .mobile-section-num {
+    position: absolute;
+    top: 32px;
+    right: 28px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    color: rgba(0,0,0,0.18);
+    text-transform: uppercase;
+    z-index: 3;
   }
 }
 
